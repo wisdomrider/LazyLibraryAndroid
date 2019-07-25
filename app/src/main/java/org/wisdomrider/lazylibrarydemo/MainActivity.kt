@@ -1,15 +1,17 @@
 package org.wisdomrider.lazylibrarydemo
 
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import org.wisdomrider.lazylibrary.LazyBase
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : LazyBase() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Toast.makeText(this, (application as App).h.x, 5000).show()
+        t.update()
+
     }
 
 }
+

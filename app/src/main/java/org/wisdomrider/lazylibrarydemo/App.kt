@@ -1,13 +1,9 @@
 package org.wisdomrider.lazylibrarydemo
 
-import android.app.Application
+import org.wisdomrider.lazylibrary.LazyApp
 
-class App : Application() {
-    class H(var x: String)
-
-    lateinit var h: H
+class App : LazyApp(){
     override fun onCreate() {
         super.onCreate()
-        h = H("demo")
     }
 }
