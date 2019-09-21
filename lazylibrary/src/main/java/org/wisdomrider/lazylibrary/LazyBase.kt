@@ -22,7 +22,7 @@ open class LazyBase : AppCompatActivity() {
     lateinit var lazy: Lazy
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lazy = (application as LazyApp).lazy
+        lazy =Lazy(application)
     }
 
 

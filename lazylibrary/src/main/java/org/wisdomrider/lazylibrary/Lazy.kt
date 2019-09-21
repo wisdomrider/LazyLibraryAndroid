@@ -17,23 +17,8 @@ class Lazy(var application: Application) {
     var context: Context = application.applicationContext
     lateinit var retrofit: Retrofit
     lateinit var base_url:String
-    val gson = Gson()
     lateinit var responseDialog: LazyBase.LazyNetworkDialog
     lateinit var mReceiver: BroadcastReceiver
-    fun toast(
-        any: Any,
-        time: Int = Toast.LENGTH_SHORT,
-        show: Boolean = true
-    ): Toast? {
-        val t = Toast.makeText(
-            context,
-            "${any}",
-            time
-        )
-        if (show)
-            t.show()
-        return t
-    }
 
 
     fun receiveBroadcast(function: (intent: Intent) -> Unit) {

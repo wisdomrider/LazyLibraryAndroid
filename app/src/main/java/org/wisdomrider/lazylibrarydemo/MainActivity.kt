@@ -1,9 +1,15 @@
 package org.wisdomrider.lazylibrarydemo
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog.*
+import kotlinx.android.synthetic.main.dialog.view.*
 import org.wisdomrider.lazylibrary.LazyBase
+import org.wisdomrider.lazylibrary.LazyRecyclerAdapter
+
 
 class MainActivity : LazyBase() {
     internal class API(
@@ -15,9 +21,8 @@ class MainActivity : LazyBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        t.loadImage(R.drawable.ic_launcher_foreground)
         lazy.initRetrofit(
-            "https://misty-day.glitch.me",
+            "https://kiviaapi.herokuapp.com/",
             enableLogging = true,
             lazyNetworkDialog = RequestDialog()
         )
@@ -26,9 +31,15 @@ class MainActivity : LazyBase() {
 
 
 
-        api.a().fetch({
 
-            loge(it!!.items)
+
+        api.a().fetch({
+            recycler.layoutManager = LinearLayoutManager(this@MainActivity)
+            recycler.adapter=LazyRecyclerAdapter({
+                _,_->
+
+            },it!!.size,R.layout.dialog)
+
 
         })
     }
@@ -37,6 +48,7 @@ class MainActivity : LazyBase() {
     class RequestDialog : LazyNetworkDialog {
         override fun <T> onSucess(response: T?, ddialog: DataDialog, status: Int) {
             ddialog.dialog.gets_called.text = "ON Success";
+            ddialog.dialog.dismiss()
 
         }
 
