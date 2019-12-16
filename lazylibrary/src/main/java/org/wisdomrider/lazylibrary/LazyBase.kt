@@ -18,7 +18,6 @@ import java.io.Serializable
 
 open class LazyBase : AppCompatActivity() {
 
-
     lateinit var lazy: Lazy
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,52 +47,40 @@ open class LazyBase : AppCompatActivity() {
     }
 
     fun <T> Call<T>.fetch(
+        context: Context,
         response: (response: T?) -> Unit,
         failure: ((t: Throwable) -> Unit)? = null,
         showDialog: Boolean = true
     ) {
-        var dialog = DataDialog(this@LazyBase)
+        var dialog = DataDialog(context)
         dialog.url = this.request().url().toString().replace(lazy.base_url, "")
 
         if (showDialog)
-            lazy.responseDialog.onLoading(dialog)
+         //   lazy.responseDialog.onLoading(dialog)
 
         this.enqueue(object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {
                 if (showDialog)
-                    lazy.responseDialog.onExceptions(dialog, t)
+           //         lazy.responseDialog.onExceptions(dialog, t)
                 failure?.let { failure(t) }
             }
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (showDialog)
-                    lazy.responseDialog.onSucess(response.body(), dialog, response.code())
-                response(response.body())
-
+             //       lazy.responseDialog.onSucess(response.body(), dialog, response.code())
+                    response(response.body())
             }
 
         })
     }
 
-
-    fun logd(s: Any) {
-        Log.d("LazyDebug", "${s}")
-    }
-
-    fun loge(s: Any) {
-        Log.e("LazyError", "${s}")
-    }
-
-
     class DataDialog(context: Context, var url: String = "") {
-        lateinit var dialog: Dialog
 
-        init {
-            dialog = Dialog(context)
-        }
+        var dialog: Dialog = Dialog(context)
+
     }
 
-    public interface LazyNetworkDialog {
+    interface LazyNetworkDialog {
         /*Gets called when the request is being sent */
         /*You can make a loading or something you wanted*/
         fun onLoading(ddialog: DataDialog)

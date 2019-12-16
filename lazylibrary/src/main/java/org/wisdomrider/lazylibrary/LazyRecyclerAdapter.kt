@@ -5,26 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 
-
-
-public class LazyRecyclerAdapter(
-    var bindViewHolder: (holder: WisdomHolder, position: Int) -> Unit,
-    var items: Int,
-    val inflateView: Int? = null,
-    var viewHolderCreate: ((parent: ViewGroup, viewType: Int) -> WisdomHolder)? = null
+ class LazyRecyclerAdapter(
+     val inflateView: Int? = null,
+     val lazyViewHolder: LazyViewHolder,
+     val list: List<Any>
 ) :
-    Adapter<LazyRecyclerAdapter.WisdomHolder>() {
+    Adapter<LazyRecyclerAdapter.WisdomHolder>(), LazyViewHolder {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WisdomHolder {
-        viewHolderCreate?.let { a -> return a(parent, viewType) }
-        return WisdomHolder(View.inflate(parent.context, R.layout.dialog, null))
+        return WisdomHolder(View.inflate(parent.context, inflateView!!, null))
     }
+
     class WisdomHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onBindViewHolder(holder: WisdomHolder, position: Int) {
-        bindViewHolder(holder, position)
+        this.lazyViewHolder.lazyOnBindViewHolder(holder,list,position)
     }
 
     override fun getItemCount(): Int {
-        return items
+         return list.size
     }
 }

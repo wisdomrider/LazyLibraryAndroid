@@ -17,7 +17,7 @@ class Lazy(var application: Application) {
     var context: Context = application.applicationContext
     lateinit var retrofit: Retrofit
     lateinit var base_url:String
-    lateinit var responseDialog: LazyBase.LazyNetworkDialog
+   // lateinit var responseDialog: LazyBase.LazyNetworkDialog
     lateinit var mReceiver: BroadcastReceiver
 
 
@@ -36,8 +36,8 @@ class Lazy(var application: Application) {
     fun initRetrofit(
         BASE_URL: String,
         httpClient: OkHttpClient.Builder = OkHttpClient.Builder(),
-        enableLogging: Boolean = false,
-        lazyNetworkDialog: LazyBase.LazyNetworkDialog? = null
+        enableLogging: Boolean = false
+       // lazyNetworkDialog: LazyBase.LazyNetworkDialog? = null
     ) {
 
         /*Must install implementation 'com.squareup.retrofit2:retrofit:2.6.1' */
@@ -47,7 +47,7 @@ class Lazy(var application: Application) {
             logging.level = HttpLoggingInterceptor.Level.BODY
         }
 
-        lazyNetworkDialog?.let { responseDialog = lazyNetworkDialog }
+       // lazyNetworkDialog?.let { responseDialog = lazyNetworkDialog }
         base_url=BASE_URL
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
