@@ -6,6 +6,6 @@ import retrofit2.http.GET;
 
 
 public interface Api {
-    @GET("/api/5df7249209e7340017b72221/mac")
+    @GET("/api/5df8b1e018f7090017c1df92/hello")
     Call<Dataclass> a();
 }

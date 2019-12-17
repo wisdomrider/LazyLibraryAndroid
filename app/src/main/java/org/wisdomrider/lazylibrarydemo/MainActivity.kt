@@ -1,6 +1,7 @@
 package org.wisdomrider.lazylibrarydemo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog.view.*
@@ -15,14 +16,17 @@ class MainActivity : LazyBase() {
         setContentView(R.layout.activity_main)
         lazy.initRetrofit(
             "https://kiviaapi.herokuapp.com/",
-            enableLogging = true)
+            enableLogging = false,
+            enableBasicAuthentication = true,
+            userName = "hello@xc.me",
+            password = "123456"
+        )
         api = lazy.retrofit.create(Api::class.java)
         api.a().fetch(
-            this,
             {
                 recycler.layoutManager = LinearLayoutManager(this@MainActivity)
                 recycler.adapter = LazyRecyclerAdapter(
-                    R.layout.dialog, object: LazyViewHolder {
+                    R.layout.dialog, object : LazyViewHolder {
                         override fun lazyOnBindViewHolder(
                             holder: LazyRecyclerAdapter.WisdomHolder,
                             list: List<Any?>,
@@ -34,7 +38,9 @@ class MainActivity : LazyBase() {
                         }
                     }, it!!.family
                 )
-            }
+            }, { error ->
+                Log.e("Error", error.message)
+            }, true
         )
     }
 }

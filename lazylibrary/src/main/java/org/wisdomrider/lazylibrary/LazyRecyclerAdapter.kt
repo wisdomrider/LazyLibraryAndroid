@@ -5,12 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 
- class LazyRecyclerAdapter(
+class LazyRecyclerAdapter(
      val inflateView: Int? = null,
      val lazyViewHolder: LazyViewHolder,
      val list: List<Any>
 ) :
     Adapter<LazyRecyclerAdapter.WisdomHolder>(), LazyViewHolder {
+
+    override fun lazyOnBindViewHolder(holder: WisdomHolder, list: List<Any?>, position: Int) {
+
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WisdomHolder {
         return WisdomHolder(View.inflate(parent.context, inflateView!!, null))
     }
