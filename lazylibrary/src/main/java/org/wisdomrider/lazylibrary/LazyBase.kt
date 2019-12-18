@@ -55,30 +55,31 @@ open class LazyBase : AppCompatActivity() {
         failure: ((t: Throwable) -> Unit)? = null,
         showProgressBar: Boolean? = false,
         progressBarTittle: String? = "Loading ...",
-        progressBarColor: String? = "#000000"
+        progressBarColor: String? = "#000000",
+        fetchData: Boolean? = true
     ) {
-        var progressBar = getProgressBar(progressBarTittle!!, progressBarColor!!)
-        if (showProgressBar!!)
-            progressBar.show()
-        this.enqueue(object : Callback<T> {
-            override fun onFailure(call: Call<T>, t: Throwable) {
-                if (showProgressBar!!)
-                    progressBar.dismiss()
-                failure?.let { failure(t) }
-            }
-
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                if (showProgressBar!!)
-                    progressBar.dismiss()
-                if (response.code() == 200) {
-                    response(response.body())
-                } else if (response.code() == 401) {
-                    failure?.let { failure(Throwable("Unauthorized")) }
-                } else {
-                    failure?.let { failure(Throwable("Un Known Error")) }
+        if (fetchData!!) {
+            var progressBar = getProgressBar(progressBarTittle!!, progressBarColor!!)
+            if (showProgressBar!!)
+                progressBar.show()
+            this.enqueue(object : Callback<T> {
+                override fun onFailure(call: Call<T>, t: Throwable) {
+                    if (showProgressBar!!)
+                        progressBar.dismiss()
+                    failure?.let { failure(t) }
                 }
-            }
-        })
+
+                override fun onResponse(call: Call<T>, response: Response<T>) {
+                    if (showProgressBar!!)
+                        progressBar.dismiss()
+                    when {
+                        response.code() == 200 -> response(response.body())
+                        response.code() == 401 -> failure?.let { failure(Throwable("Unauthorized")) }
+                        else -> failure?.let { failure(Throwable("Un Known Error" + response.code()+ "Status Code")) }
+                    }
+                }
+            })
+        }
     }
 
     fun getProgressBar(progressBarTittle: String, progressBarColor: String): AlertDialog {
