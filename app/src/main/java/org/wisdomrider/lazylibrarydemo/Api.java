@@ -11,5 +11,6 @@ public interface Api {
 
     @GET("/api/v1/dashboard")
     Call<Dash> getData();
+
 }
 

@@ -22,9 +22,7 @@ class MainActivity : LazyBase() {
             userName = "hello@xc.me",
             password = "123456"
         )
-
         api = lazy.retrofit.create(Api::class.java)
-
         // Fetching Data Form Api And Adding on RecyclerView exmple
         api.a().fetch(
             {
@@ -61,7 +59,5 @@ class MainActivity : LazyBase() {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }, true, fetchData = true, progressBarTittle = "Fetching Secure REST API"
         )
-        // After you Recive Token
-
     }
 }
