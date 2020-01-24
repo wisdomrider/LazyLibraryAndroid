@@ -26,20 +26,22 @@ class MainActivity : LazyBase() {
         // Fetching Data Form Api And Adding on RecyclerView exmple
         api.a().fetch(
             {
-                recycler.layoutManager = LinearLayoutManager(this@MainActivity)
-                recycler.adapter = LazyRecyclerAdapter(
-                    R.layout.dialog, object : LazyViewHolder {
-                        override fun lazyOnBindViewHolder(
-                            holder: LazyRecyclerAdapter.WisdomHolder,
-                            list: List<Any?>,
-                            position: Int
-                        ) {
-                            var mylist = list as ArrayList<family>
-                            var textView = holder.itemView.name
-                            textView.text = mylist[position].name
-                        }
-                    }, it!!.family
-                )
+                if (it.code() == 200) {
+                    recycler.layoutManager = LinearLayoutManager(this@MainActivity)
+                    recycler.adapter = LazyRecyclerAdapter(
+                        R.layout.dialog, object : LazyViewHolder {
+                            override fun lazyOnBindViewHolder(
+                                holder: LazyRecyclerAdapter.WisdomHolder,
+                                list: List<Any?>,
+                                position: Int
+                            ) {
+                                var mylist = list as ArrayList<family>
+                                var textView = holder.itemView.name
+                                textView.text = mylist[position].name
+                            }
+                        }, it.body()!!.family
+                    )
+                }
             }, { error ->
                 Log.e("Error", error.message)
             }, true, fetchData = false
@@ -54,7 +56,7 @@ class MainActivity : LazyBase() {
 
         api.data.fetch(
             {
-                Toast.makeText(this, it!!.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it!!.message(), Toast.LENGTH_SHORT).show()
             }, {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }, true, fetchData = true, progressBarTittle = "Fetching Secure REST API"

@@ -25,7 +25,6 @@ open class LazyBase : AppCompatActivity() {
     lateinit var lazy: Lazy
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         lazy = Lazy(application)
     }
 
@@ -51,7 +50,7 @@ open class LazyBase : AppCompatActivity() {
     }
 
     fun <T> Call<T>.fetch(
-        response: (response: T?) -> Unit,
+        response: (response: Response<T>) -> Unit,
         failure: ((t: Throwable) -> Unit)? = null,
         showProgressBar: Boolean? = false,
         progressBarTittle: String? = "Loading ...",
@@ -72,11 +71,8 @@ open class LazyBase : AppCompatActivity() {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     if (showProgressBar!!)
                         progressBar.dismiss()
-                    when {
-                        response.code() == 200 -> response(response.body())
-                        response.code() == 401 -> failure?.let { failure(Throwable("Unauthorized")) }
-                        else -> failure?.let { failure(Throwable("Un Known Error" + response.code()+ "Status Code")) }
-                    }
+                       response(response)
+
                 }
             })
         }
