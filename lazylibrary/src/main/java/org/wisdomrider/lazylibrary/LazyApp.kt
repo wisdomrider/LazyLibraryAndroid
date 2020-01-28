@@ -151,10 +151,6 @@ open class LazyApp(
         return dialog
     }
 
-
-
-
-
     var prefs: SharedPreferences? = null
     private fun initLazyPref(context: Context): SharedPreferences {
         val prefs = context.applicationContext.getSharedPreferences(LazyConstant.LAZY_PREFERENCE, 0)
@@ -166,5 +162,4 @@ open class LazyApp(
         prefs?.edit()?.putString(LazyConstant.TOKEN_HEADER, tokenHeader)?.apply()
         prefs?.edit()?.putString(LazyConstant.TOKEN_VALUE, tokenValue)?.apply()
     }
-
 }
