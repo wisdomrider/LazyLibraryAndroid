@@ -32,6 +32,10 @@ open class LazyApp(
     override fun onCreate() {
         super.onCreate()
         initRetrofit(BASE_URL, enableLogin, enableBasicAuthentication, userName, password, httpClient)
+        lazyInterceptor(
+            "Authorization",
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjcyYTQwZTI1ZmRmMTk1ZjJjOWVlZjIxYjU0NGUzYWFlMTFjMmZhMjE5MTk5ZWVkYjA1Njg4Nzk0N2RlOTdhMzlhYjFmZTYzNmQ5MzUyNWEzIn0.eyJhdWQiOiIxIiwianRpIjoiNzJhNDBlMjVmZGYxOTVmMmM5ZWVmMjFiNTQ0ZTNhYWUxMWMyZmEyMTkxOTllZWRiMDU2ODg3OTQ3ZGU5N2EzOWFiMWZlNjM2ZDkzNTI1YTMiLCJpYXQiOjE1NzY2NTA3NzksIm5iZiI6MTU3NjY1MDc3OSwiZXhwIjoxNjA4MjczMTc5LCJzdWIiOiI0MiIsInNjb3BlcyI6W119.hHFj6I5tqjZAgY60QVvaFbWarU--tPWeAInhbG4ntFdkeI1j0b0GuQ5gYq5bN5SCFntt6eoQdcQyywKxSKL9eUea0iR03V7PP5ebxlFKAyf5cQ_v58kF2CLxTYwfzUpZUL8Bz8J3Et97gPb8IcZAJKlFy9V5twE6HrehaaSDOvYRHYVUeusQwm0IH-gBwsl3_RQ6q8h1tPrLYYAFC2HSbFPOSQf29DPW-63WlAqHQ_Vt81RaLfiNxlNfDhPtXh1T-7VoPAweLvRxZCbbFFNcKf0U8yXd66kNgkkMlBXk3GAIE9OhZCP08EbZVlsWes1KVcRC4AA39U6W-NndiBGWUOUJQeWwkTcftXZ6myOAaDADlMLk76vXseYEqwtvbn_oHWrhKVfTbdP3Cev94R4TfigxTHUwYB_oLJskIfj5NlHMMFAMcY6wZuVwT9aThFd_dA3wwYW8UzzJBk3pNWHDdjWIlE0fKLHjp4DvoHTOLo1kWYesL6y-wFo7J8gsu48H3-6qS0M31u_Vt25p9OLM-dYSBjyOfjxgV3Wf0RVVQzMWqtUHfgdUyfmWS7G4eQ5POfWhtnJfISaSykFrvqqx1lOY2rgdTMLed72OD5uKBAkAWLul02BuIgVcYGuVgcyF6WDxGpjUdIVMYvFFe0CLNNrGfqsbZ4tKSG9H8hO1edA"
+        )
     }
 
     fun initRetrofit(

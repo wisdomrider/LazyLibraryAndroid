@@ -15,7 +15,6 @@ class MainActivity : LazyBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         var myApi = application as App
 
         myApi.api.a().fetch(
