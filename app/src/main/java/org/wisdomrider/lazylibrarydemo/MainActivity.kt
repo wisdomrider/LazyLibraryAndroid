@@ -1,5 +1,4 @@
 package org.wisdomrider.lazylibrarydemo
-
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,12 +10,22 @@ import org.wisdomrider.lazylibrary.LazyRecyclerAdapter
 import org.wisdomrider.lazylibrary.LazyViewHolder
 
 class MainActivity : LazyBase() {
-    lateinit var api: Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var myApi = application as App
 
+
+        // Broadcast Receive Example
+        lazy.receiveBroadcast {
+        var family =  it.extras.getSerializable("data") as Family
+           Toast.makeText(this, family.name, Toast.LENGTH_LONG).show()
+        }
+
+        var family = Family("Radhika Neupane", "mother")
+        family.sendToBroadcast()
+
+        // Fetching data from Api And loading on Recycler view
         myApi.api.a().fetch(
             {
                 if (it.code() == 200) {
@@ -28,7 +37,7 @@ class MainActivity : LazyBase() {
                                 list: List<Any?>,
                                 position: Int
                             ) {
-                                var mylist = list as ArrayList<family>
+                                var mylist = list as ArrayList<Family>
                                 var textView = holder.itemView.name
                                 textView.text = mylist[position].name
                             }
@@ -37,10 +46,10 @@ class MainActivity : LazyBase() {
                 }
             }, { error ->
                 Log.e("Error", error.message)
-            }, true, fetchData = true
+            }, true, fetchData = false
         )
 
-        // Adding A token Intercepter And fetching data
+        // Adding A token Interceptor and fetching data
 
         myApi.lazyInterceptor(
             "Authorization",
@@ -54,5 +63,8 @@ class MainActivity : LazyBase() {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }, true, fetchData = false, progressBarTittle = "Fetching Secure REST API"
         )
+
+         // Auto receive sms on lazyPinView
+        enableOneTimeOtpCode( "PES_ALERT",lazyPingView)
     }
 }

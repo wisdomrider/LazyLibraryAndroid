@@ -15,8 +15,6 @@ class LazyRecyclerAdapter(
     override fun lazyOnBindViewHolder(holder: WisdomHolder, list: List<Any?>, position: Int) {
 
     }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WisdomHolder {
         return WisdomHolder(View.inflate(parent.context, inflateView!!, null))
     }

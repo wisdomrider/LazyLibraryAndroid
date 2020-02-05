@@ -1,6 +1,5 @@
 package org.wisdomrider.lazylibrarydemo;
 
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -10,6 +9,5 @@ public interface Api {
 
     @GET("/api/v1/dashboard")
     Call<Dash> getData();
-
 }
 
