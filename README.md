@@ -4,10 +4,10 @@
  Simple android library that makes production faster
  
  # Feature of LazyLibray
- 1 API Fetching 
- 2 Broadcast Management
- 3 One time Otp Verification
- 4 No need to make RecyclerView Adapter
+ - 1 API Fetching 
+ - 2 Broadcast Management
+ - 3 One time Otp Verification
+ - 4 No need to make RecyclerView Adapter
  
  
  # How to use 
