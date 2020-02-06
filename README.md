@@ -49,11 +49,11 @@ class YourApplicationClass : LazyApp(
 
  LazyApp takes max 5 parameters all of them are optional except Base URL
  
-## 1st  parameters represent BASE_URL 
+ 1st  parameters represent BASE_URL 
  
- ## enableLogin = By default enableLogn is false if you make it true than you can see your Api Long on Verbose, where it   shows  header, Request Body and Response Body
- 
- ## enableBasicAuthentication = By default enableBasicAuthentication is false if you make it true, you need to provide a username and password as parameter as above. It active the server Basic Authentication (API)
+enableLogin = By default enableLogn is false if you make it true than you can see your Api Long on Verbose, where it   shows  header, Request Body and Response Body
+
+enableBasicAuthentication = By default enableBasicAuthentication is false if you make it true, you need to provide a username and password as parameter as above. It active the server Basic Authentication (API)
  
 Your first step has been completed
 
@@ -80,12 +80,11 @@ class MainActivity: LazyBase() {
      }
  }
  ```
-## showProgressBar = By default showProgressBar if false if you make it true than you can get default progressBar while  loading data  
-  
-## fetchData = By default fetchData is true if you make it false than it does not fetch data from the server
+showProgressBar = By default showProgressBar if false if you make it true than you can get default progressBar while  loading data  
  
-## progressBarTitle = You can give your title while loading progress bar example loading.... etc
-
+ fetchData = By default fetchData is true if you make it false than it does not fetch data from the server
+ 
+ progressBarTitle = You can give your title while loading progress bar example loading.... etc
 
 # Adding Interceptor on Header
 Lazy Library use OkHttp3 Interceptor to add Intercepot on Header you can use
