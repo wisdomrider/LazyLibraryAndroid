@@ -49,26 +49,25 @@ class YourApplicationClass : LazyApp(
 
  LazyApp takes max 5 parameters all of them are optional except Base URL
  
- 1st  parameters represent BASE_URL 
+## 1st  parameters represent BASE_URL 
  
- enableLogin = By default enableLogn is false if you make it true than you can see your Api Long on Verbose, where it shows  header, Request Body and Response Body
+ ## enableLogin = By default enableLogn is false if you make it true than you can see your Api Long on Verbose, where it   shows  header, Request Body and Response Body
  
- enableBasicAuthentication = By default enableBasicAuthentication is false if you make it true, you need to provide a username and password as parameter as above. It active the server Basic Authentication (API)
+ ## enableBasicAuthentication = By default enableBasicAuthentication is false if you make it true, you need to provide a username and password as parameter as above. It active the server Basic Authentication (API)
  
 Your first step has been completed
 
 You need Api interface to define rest in point for this you need to add dependencie 'com.squareup.retrofit2:retrofit:2.6.1' on build.gradle
-
-Now 
+Now
+```
  public interface Api {
   @GET("/api/......")
   Call<ResponseClass> getMyData()
  }
  
-
-
+```
 Now you need to extend your MainActivity class with LazyBase()
-
+```
 class MainActivity: LazyBase() {
     overide fun onCreate(saveInstanceState: Bundle?) {
      ..................
@@ -80,31 +79,31 @@ class MainActivity: LazyBase() {
        },showProgressBar = true, fetchData = false, progressBarTittle = "Fetching Secure REST API")
      }
  }
+ ```
+## showProgressBar = By default showProgressBar if false if you make it true than you can get default progressBar while  loading data  
   
-  showProgressBar = By default showProgressBar if false if you make it true than you can get default progressBar while  loading data  
-  
-fetchData = By default fetchData is true if you make it false than it does not fetch data from the server
+## fetchData = By default fetchData is true if you make it false than it does not fetch data from the server
  
-progressBarTitle = You can give your title while loading progress bar example loading.... etc
+## progressBarTitle = You can give your title while loading progress bar example loading.... etc
 
 
 # Adding Interceptor on Header
-Lazy Library use OkHttp3 Interceptor
-to add Intercepot on Header you can use
-
+Lazy Library use OkHttp3 Interceptor to add Intercepot on Header you can use
+```
 myApi.api.lazyInterceptor(
 tokenHeader = "HeaderName",
 tokenValue= "Bearer ldkjfkdjfkdjfldjfkdjkfjd..0..."
 )
-
+```
 # example
+```
 myApi.lazyInterceptor(
             tokenHeader = "Authorization"
             ,
             tokenValue =
             "Bearer eyJ0eXAiOiJK"
         )
-        
+```     
 After adding Interceptor on Header Now you do not need to add every time token on Header while fetching (or requesting) data from the Server
 
 
@@ -113,24 +112,28 @@ After adding Interceptor on Header Now you do not need to add every time token o
  
  # Sending Object on broad cast
   Make a Pojo class where you can set you data on Family class
-  
+  `
   class Family(var name: String, var relation: String): Serializable
-  
+  `
   You need to implement Serializable
   
-  Example 
+  Example
+  ```
+
       lazy.receiveBroadcast {
         var family =  it.extras.getSerializable("data") as Family
            Toast.makeText(this, family.name, Toast.LENGTH_LONG).show()
         }
         var family = Family("family name", "relation")
         family.sendToBroadcast()
+```
         
 # Simple Broad cast
 Example
+```
  lazy.receiveBroadcast { intent ->
            //you will recive your boradcast
         }
 var intent = Intent()
 intent.sendToBroadcast()
-    
+```
