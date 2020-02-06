@@ -135,3 +135,71 @@ Example
 var intent = Intent()
 intent.sendToBroadcast()
 ```
+# One time Otp VerificationLazy 
+Lazy provides you One time Otp Verification option for that you need to use LazyPinView  LazyPinView is child class of `com.chaos.view.PinView` for more details you can  use this link [GitHub Page] (https://github.com/ChaosLeung/PinView)
+
+It provides you one itme OtpVerification
+## Example 
+Xml file
+```
+<org.wisdomrider.lazylibrary.LazyPinView
+            android:id="@+id/lazyPingView"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="64dp"
+            android:layout_marginRight="8dp"
+            android:cursorVisible="true"
+            android:hint="Enter code hear"
+            android:inputType="text"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cursorColor="@color/colorPrimary"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="true"
+            app:itemCount="4"
+            app:itemHeight="48dp"
+            app:itemRadius="4dp"
+            app:itemSpacing="0dp"
+            app:itemWidth="48dp"
+            app:lineWidth="2dp"
+            app:viewType="rectangle"/>
+``` 
+java File you can use
+
+`enableOneTimeOtpCode( "phoneNumber" , lazyPingView)`
+
+You need to call enableOneTimeOtpCode method for auto readable message on PinView. It takes two parameters phonenumber and pinView.In 1st parameter you need to provide PhoneNumber form where your otp is being generated and in 2nd you need to provide lazyPinView object.
+
+
+
+
+
+
+## No need to make RecyclerView Adapter
+You can directly set your adapter on RecyclerView. For this you can call LazyRecyclerAdapter.
+# Example
+ ```
+  recycler.layoutManager = LinearLayoutManager(this@MainActivity)
+  recycler.adapter = LazyRecyclerAdapter(
+                        R.layout.row, object : LazyViewHolder {
+                            override fun lazyOnBindViewHolder(
+                                holder: LazyRecyclerAdapter.WisdomHolder,
+                                list: List<Any?>,
+                                position: Int
+                            ) {
+                             // you can get list postion
+                             // your can get your list
+                             // you can get your row 
+                            }
+                        }, yourList
+                    )
+ 
+ ```
+LazyRecyclerAdapter takes 3 parameters first one is your RecycelrView row layout second one is LazyViewHolder Object and Third one is list which you want to display on RecyclerView.
+
+
