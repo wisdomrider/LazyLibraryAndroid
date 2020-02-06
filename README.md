@@ -23,7 +23,6 @@
 ```
 ```
 dependencies {
-   implementation 'com.chaos.view:pinview:1.4.3'
    implementation 'com.github.wisdomrider:LazyLibraryAndroid:1.2.1' 
 }
 ```
