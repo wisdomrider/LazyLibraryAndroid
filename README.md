@@ -14,20 +14,20 @@
  
  Lazy Libray has been rebuilt on AndoridX, If you are still using the androd support Library, please use 1.4.2 
  repositories {
-    maven {
+  `maven {
         jcenter()
         maven { url 'https://jitpack.io'
     }
-}
+}`
 
-dependencies {
+`dependencies {
    implementation 'com.chaos.view:pinview:1.4.3'
    implementation 'com.github.wisdomrider:LazyLibraryAndroid:1.2.1' 
-}
+}`
 
 # API Fetching
 You need to extend your Application Class with LazyApp
-class YourApplicationClass : LazyApp(
+`class YourApplicationClass : LazyApp(
     "https://baseurl.com/",
     enableLogin = true,
     enableBasicAuthentication = true,
@@ -39,7 +39,7 @@ class YourApplicationClass : LazyApp(
         super.onCreate()
         api = retrofit.create(Api::class.java)
     }
-}
+}`
  LazyApp takes max 5 parameters all of them are optional except Base URL
  
  1st  parameters represent BASE_URL 
