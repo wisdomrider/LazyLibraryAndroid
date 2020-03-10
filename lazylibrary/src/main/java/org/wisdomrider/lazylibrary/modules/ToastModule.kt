@@ -1,4 +1,4 @@
-package org.wisdomrider.lazylibrarydemo
+package org.wisdomrider.lazylibrary.modules
 
 import android.widget.Toast
 import org.wisdomrider.lazylibrary.Functions
@@ -13,11 +13,10 @@ open class ToastModule : LazyModule() {
 }
 
 
-fun String.toast(): Functions<ToastModule> {
+fun String.toast(time: Int = Toast.LENGTH_SHORT): Functions<ToastModule> {
     return Functions(ToastModule::class.java) {
-        it.toast(this)
+        it.toast(this, time)
     }
-
 }
 
 

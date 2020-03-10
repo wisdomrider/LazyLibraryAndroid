@@ -21,18 +21,18 @@ open class LazyBase : AppCompatActivity() {
     }
 
 
-    fun <T> extensive(d: () -> Functions<T>) {
+    fun <T> lazy(d: () -> Functions<T>) {
         val x = d()
         x.function(lazy.getModule(x.java))
     }
 
-    fun <T> extensives(d: () -> Array<Functions<T>>) {
+    fun <T> lazies(d: () -> Array<Functions<T>>) {
         d().forEach {
             it.function(lazy.getModule(it.java))
         }
     }
 
-    fun <T> Functions<T>.extensive() {
+    fun <T> Functions<T>.lazy() {
         this.function(lazy.getModule(this.java))
     }
 
