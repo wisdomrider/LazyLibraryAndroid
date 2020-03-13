@@ -1,40 +1,66 @@
 package org.wisdomrider.lazylibrarydemo
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item.view.*
 import org.wisdomrider.lazylibrary.LazyBase
-import org.wisdomrider.lazylibrary.modules.gridLayoutManager
 import org.wisdomrider.lazylibrary.modules.lazyAdapter
 import org.wisdomrider.lazylibrary.modules.linearLayoutManager
+import org.wisdomrider.lazylibrary.modules.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : LazyBase() {
-    class Book(
-        var id: Int,
-        var name: String,
-        var price: Float
+
+    class Response(
+        var userId: String,
+        var id: String,
+        var title: String,
+        body: String
     )
 
-    var books = ArrayList<Book>()
-
+    lateinit var api: Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        books.add(Book(1, "a", 1.2f))
-        books.add(Book(2, "b", 1.1f))
-        books.add(Book(3, "c", 1.0f))
-        books.add(Book(4, "d", 1.3f))
-        recycle.lazyAdapter(books, R.layout.item) { holder, position, item ->
-            holder.itemView.book_id.text = item.id.toString()
-            holder.itemView.book_name.text = item.name
-        }
-        recycle.gridLayoutManager(2).lazy()
+
+        api = (application as App).api
+
+        api.list()
+            .get({
+                recycle.lazyAdapter(it.body()!!, R.layout.item) { holder, position, item ->
+                    holder.itemView.user_id.text = item.userId
+                    holder.itemView.id1.text = item.title
+                }
+            }, {
+                it.message!!.toast().lazy()
+
+            })
+
+        recycle.linearLayoutManager().lazy()
+
 
     }
 
 
 }
+
+fun <T> Call<T>.get(
+    response: (response: Response<T>) -> Unit,
+    failure: (t: Throwable) -> Unit
+) {
+    this.enqueue(object : Callback<T> {
+        override fun onFailure(call: Call<T>, t: Throwable) {
+            failure(t)
+        }
+
+        override fun onResponse(call: Call<T>, response: Response<T>) {
+            response(response)
+        }
+
+    })
+}
+
 
 

@@ -32,8 +32,8 @@ open class LazyBase : AppCompatActivity() {
         }
     }
 
-    fun <T> Functions<T>.lazy() {
-        this.function(lazy.getModule(this.java))
+    fun <T> Functions<T>.lazy(): Any {
+        return this.function(lazy.getModule(this.java))
     }
 
 }

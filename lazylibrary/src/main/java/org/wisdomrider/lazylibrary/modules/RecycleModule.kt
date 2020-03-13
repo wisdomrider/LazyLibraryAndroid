@@ -44,7 +44,7 @@ class LazyAdapter<T>(
 
 
 fun <T> RecyclerView.lazyAdapter(
-    arraylist: java.util.ArrayList<T>,
+    arraylist: ArrayList<T>,
     onCreateViewHolder: () -> LazyAdapter.WisdomHolder,
     onBindViewHolder: (holder: LazyAdapter.WisdomHolder, position: Int, item: T) -> Unit
 ): LazyAdapter<T> {
@@ -53,7 +53,7 @@ fun <T> RecyclerView.lazyAdapter(
 }
 
 fun <T> RecyclerView.lazyAdapter(
-    arraylist: java.util.ArrayList<T>,
+    arraylist: ArrayList<T>,
     viewResource: Int,
     onBindViewHolder: (holder: LazyAdapter.WisdomHolder, position: Int, item: T) -> Unit
 ): LazyAdapter<T> {

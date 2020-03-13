@@ -11,11 +11,13 @@ open class LazyApp : Application() {
 
     }
 
-    protected fun <T> inject(module: Class<T>) {
+    protected fun <T> inject(module: Class<T>): T {
         try {
-            modules.add((module.newInstance() as LazyModule).setContext(this))
+            val module = (module.newInstance() as LazyModule).setContext(this)
+            modules.add(module)
+            return module as T
         } catch (exception: Exception) {
-            throw LazyModuleNotFoundException()
+            throw LazyModuleNotFoundException(exception.message)
         }
     }
 
@@ -23,7 +25,7 @@ open class LazyApp : Application() {
         try {
             return (modules.filter { it.javaClass == module }[0] as T)
         } catch (e: Exception) {
-            throw LazyModuleNotFoundException()
+            throw LazyModuleNotFoundException(e.message)
         }
     }
 
