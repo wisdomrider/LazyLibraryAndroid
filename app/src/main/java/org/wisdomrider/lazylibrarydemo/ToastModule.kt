@@ -9,6 +9,7 @@ open class ToastModule : LazyModule() {
 
     fun toast(s: String, time: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, s, time).show()
+        lazy.getModule()
     }
 }
 
