@@ -1,6 +1,7 @@
 package org.wisdomrider.lazylibrary
 
 import android.app.Application
+import android.content.pm.PackageManager
 
 open class LazyApp : Application() {
 
@@ -10,6 +11,8 @@ open class LazyApp : Application() {
         super.onCreate()
 
     }
+
+
 
     protected fun <T> inject(module: Class<T>): T {
         try {

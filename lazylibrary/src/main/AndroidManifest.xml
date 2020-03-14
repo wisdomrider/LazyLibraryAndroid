@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
 
+
+
+
+
     <application>
         <receiver
                 android:name=".IncomingSms"
