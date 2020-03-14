@@ -33,6 +33,7 @@ open class LazyBase : AppCompatActivity() {
     fun <T> lazies(d: () -> Array<Functions<T>>) {
         d().forEach {
             it.function(lazy.getModule(it.java))
+
         }
     }
 

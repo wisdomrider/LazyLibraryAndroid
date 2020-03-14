@@ -25,6 +25,8 @@ open class LazyApp : Application() {
 
     }
 
+
+
     protected fun <T> inject(module: Class<T>): T {
         try {
             val module = (module.newInstance() as LazyModule).setContext(this)
