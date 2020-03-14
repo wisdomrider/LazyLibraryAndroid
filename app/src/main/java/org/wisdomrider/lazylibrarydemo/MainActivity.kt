@@ -1,15 +1,14 @@
 package org.wisdomrider.lazylibrarydemo
 
+import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item.view.*
 import org.wisdomrider.lazylibrary.LazyBase
+import org.wisdomrider.lazylibrary.modules.get
 import org.wisdomrider.lazylibrary.modules.lazyAdapter
 import org.wisdomrider.lazylibrary.modules.linearLayoutManager
 import org.wisdomrider.lazylibrary.modules.toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : LazyBase() {
 
@@ -29,10 +28,9 @@ class MainActivity : LazyBase() {
 
         api.list()
             .get({
-                recycle.lazyAdapter(it.body()!!, R.layout.item) { holder, position, item ->
-                    holder.itemView.user_id.text = item.userId
-                    holder.itemView.id1.text = item.title
-                }
+                it.body()!!.size.toString().toast().lazy()
+//                lazy.sendBroadcast(Intent().putExtra("a", "w"))
+
             }, {
                 it.message!!.toast().lazy()
 
@@ -43,6 +41,9 @@ class MainActivity : LazyBase() {
 
     }
 
+    override fun gotBroadcast(intent: Intent?) {
+        "GOTSOME ${intent!!.extras.getString("a")}".toast().lazy()
+    }
 
 }
 

@@ -1,5 +1,6 @@
 package org.wisdomrider.lazylibrary
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,6 +14,9 @@ open class LazyBase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lazy = application as LazyApp
+        lazy.callIt = {
+            gotBroadcast(it)
+        }
 
     }
 
@@ -36,4 +40,9 @@ open class LazyBase : AppCompatActivity() {
         return this.function(lazy.getModule(this.java))
     }
 
+    open fun gotBroadcast(intent: Intent?) {
+
+    }
+
 }
+
