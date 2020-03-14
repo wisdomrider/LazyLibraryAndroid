@@ -2,9 +2,6 @@ package org.wisdomrider.lazylibrary
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Functions<T>(
     var java: Class<T>,
@@ -37,22 +34,6 @@ open class LazyBase : AppCompatActivity() {
 
     fun <T> Functions<T>.lazy(): Any {
         return this.function(lazy.getModule(this.java))
-    }
-
-    fun <T> Call<T>.get(
-        response: (response: Response<T>) -> Unit,
-        failure: (t: Throwable) -> Unit
-    ) {
-        this.enqueue(object : Callback<T> {
-            override fun onFailure(call: Call<T>, t: Throwable) {
-                failure(t)
-            }
-
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                response(response)
-            }
-
-        })
     }
 
 }
