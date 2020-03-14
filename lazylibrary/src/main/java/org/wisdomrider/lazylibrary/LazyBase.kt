@@ -38,6 +38,7 @@ open class LazyBase : AppCompatActivity() {
     fun <T> Functions<T>.lazy(): Any {
         return this.function(lazy.getModule(this.java))
     }
+
     fun <T> Call<T>.get(
         response: (response: Response<T>) -> Unit,
         failure: (t: Throwable) -> Unit
@@ -52,5 +53,6 @@ open class LazyBase : AppCompatActivity() {
             }
 
         })
+    }
 
 }
