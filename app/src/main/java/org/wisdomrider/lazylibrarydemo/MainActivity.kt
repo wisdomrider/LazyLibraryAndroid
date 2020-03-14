@@ -46,21 +46,8 @@ class MainActivity : LazyBase() {
 
 }
 
-fun <T> Call<T>.get(
-    response: (response: Response<T>) -> Unit,
-    failure: (t: Throwable) -> Unit
-) {
-    this.enqueue(object : Callback<T> {
-        override fun onFailure(call: Call<T>, t: Throwable) {
-            failure(t)
-        }
 
-        override fun onResponse(call: Call<T>, response: Response<T>) {
-            response(response)
-        }
 
-    })
-}
 
 
 
