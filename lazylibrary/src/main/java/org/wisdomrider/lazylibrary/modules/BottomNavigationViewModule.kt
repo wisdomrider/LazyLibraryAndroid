@@ -17,20 +17,25 @@ class BottomNavigationViewModule(var textView: TextView? = null) : LazyModule() 
 
 }
 
-fun  BottomNavigationView.addBadge(index: Int): Functions<BottomNavigationViewModule> {
+fun  BottomNavigationView.addBadge(index: Int,
+  function:( (textView: TextView)-> Unit)? = null
+): Functions<BottomNavigationViewModule> {
     return Functions(BottomNavigationViewModule::class.java) {
         var buttomNavigationMenuView = this.getChildAt(0) as BottomNavigationMenuView
         try {
             val view = buttomNavigationMenuView.getChildAt(index) as BottomNavigationItemView
             val badge = LayoutInflater.from(context).inflate(R.layout.merge, view, true)
-             it.textView = badge.findViewById<TextView>(R.id.tv_notification)
+            it.textView = badge.findViewById<TextView>(R.id.tv_notification)
+            if (function != null) {
+                function(it.textView!!)
+            }
         } catch (exception: Exception) {
             throw Exception("Index out of Bound Exception: model could not find menu on $index index")
         }
     }
 }
 
-fun BottomNavigationView.addNumber(index: Int): Functions<BottomNavigationViewModule> {
+fun BottomNavigationView.updateNumberOnBadge(index: Int): Functions<BottomNavigationViewModule> {
     return Functions(BottomNavigationViewModule::class.java) {
               if (index == 0) {
                   it.textView?.visibility = View.GONE
