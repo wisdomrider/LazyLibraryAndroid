@@ -37,9 +37,12 @@ fun <T> Call<T>.get(
         }
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
-            response(response)
+            if (response.code() == 200) {
+                response(response)
+            } else {
+                failure(Exception("Response class is not 200 ${response.code()}"))
+            }
         }
-
     })
 }
 

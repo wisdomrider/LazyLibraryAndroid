@@ -1,60 +1,57 @@
 package org.wisdomrider.lazylibrarydemo
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import org.wisdomrider.lazylibrary.LazyBase
-import org.wisdomrider.lazylibrary.modules.createMapSync
-import org.wisdomrider.lazylibrary.modules.toast
+import org.wisdomrider.lazylibrary.modules.reciveLazyBroadCast
+import org.wisdomrider.lazylibrary.modules.sendLazyBoradcast
+import org.wisdomrider.lazylibrarydemo.fetchdata.FetchindDataFromServer
+import org.wisdomrider.lazylibrarydemo.mapactivity.MapActivity
 
 class MainActivity : LazyBase() {
 
-    class Response(
-        var userId: String,
-        var id: String,
-        var title: String,
-        body: String
-    )
-
-    lateinit var api: Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-      /*  api = (application as App).api
-
-        api.list()
-            .get({
-                it.body()!!.size.toString().toast().lazy()
-//                lazy.sendBroadcast(Intent().putExtra("a", "w"))
-
-            }, {
-                it.message!!.toast().lazy()
-
-            })
-
-        recycle.linearLayoutManager().lazy()*/
-
-
-        this.createMapSync(R.id.map) {
-
-             var lat = 27.712021
-            var long = 85.312950
-            it?.uiSettings?.setAllGesturesEnabled(true)
-            val camaraUpdate = CameraUpdateFactory.newLatLngZoom(
-                LatLng(lat,long), 16f
-            )
-            var marker = MarkerOptions().position(LatLng(lat,long)).title("Map Activity")
-            it?.animateCamera(camaraUpdate)
-            it?.addMarker(marker)
-            "Map is ready".toast().lazy()
-        }.lazy()
     }
 
-    override fun gotBroadcast(intent: Intent?) {
-        "GOTSOME ${intent!!.extras.getString("a")}".toast().lazy()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.example_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_map -> {
+                openActivity(MapActivity::class.java)
+            }
+            R.id.action_fetchingdata -> {
+                openActivity(FetchindDataFromServer::class.java)
+            }
+            R.id.action_broad_cast_receiver -> {
+               // Receiving broad cast Example
+                reciveLazyBroadCast() { context: Context?, intent: Intent?,reciver: BroadcastReceiver? ->
+                    var msg = intent?.getStringExtra("key")
+                    Log.e("message", msg)
+                    // if you want un register than you can
+                    unregisterReceiver(reciver)
+                }.lazy()
+                // Sending Broad cast Example
+                var intent = Intent()
+                intent.putExtra("key", "Hello broad cast")
+                sendLazyBoradcast(intent).lazy()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun <T> openActivity(java: Class<T>) {
+        var intent = Intent(this, java)
+        startActivity(intent)
+    }
 }

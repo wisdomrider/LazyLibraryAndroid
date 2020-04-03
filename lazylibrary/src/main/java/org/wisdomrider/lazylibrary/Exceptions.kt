@@ -19,3 +19,4 @@ class NotFoundException(m: String?) : Exception() {
     override val message: String?
         get() = "Unable to find what you are searching.\n$message"
 }
+

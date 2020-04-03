@@ -15,7 +15,6 @@ open class LazyModule {
         this.lazy = lazy
         this.context = lazy.applicationContext
         return this
-
     }
 
 

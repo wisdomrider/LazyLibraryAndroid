@@ -17,7 +17,6 @@ open class LazyBase : AppCompatActivity() {
         lazy.callIt = {
             gotBroadcast(it)
         }
-
     }
 
     fun <T> getModule(module: Class<T>): T {
@@ -44,6 +43,5 @@ open class LazyBase : AppCompatActivity() {
     open fun gotBroadcast(intent: Intent?) {
 
     }
-
 }
 

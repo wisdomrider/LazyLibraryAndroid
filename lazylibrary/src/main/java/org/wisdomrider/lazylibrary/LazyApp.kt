@@ -16,13 +16,9 @@ open class LazyApp : Application() {
     private var modules = ArrayList<LazyModule>()
 
 
-    override fun sendBroadcast(i: Intent) {
-        i.action = LAZY_BROADCAST
-        applicationContext.sendBroadcast(i)
-    }
-
-    fun getBroadcastStream() {
-
+    override fun sendBroadcast(intent: Intent) {
+        intent.action = LAZY_BROADCAST
+        super.sendBroadcast(intent)
     }
 
 
@@ -47,16 +43,17 @@ open class LazyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val intentFilter = IntentFilter(
+            LAZY_BROADCAST
+        )
         receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (callIt == null) return
                 callIt!!(intent)
             }
-
         }
+        registerReceiver(receiver, intentFilter)
     }
-
-
 }
 
 

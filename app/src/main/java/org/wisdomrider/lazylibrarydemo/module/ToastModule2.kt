@@ -1,4 +1,4 @@
-package org.wisdomrider.lazylibrarydemo
+package org.wisdomrider.lazylibrarydemo.module
 
 import android.util.Log
 import org.wisdomrider.lazylibrary.Functions
@@ -12,7 +12,6 @@ class ToastModule2 : ToastModule() {
         isADLOaded = true
 
     }
-
 }
 
 
@@ -20,6 +19,5 @@ fun String.Toast(): Functions<ToastModule2> {
     return Functions(ToastModule2::class.java) {
         it.toastForOneMinute(this)
         Log.e("LOG", it.isADLOaded.toString())
-
     }
 }

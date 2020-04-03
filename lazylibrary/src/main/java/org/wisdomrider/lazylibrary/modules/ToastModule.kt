@@ -13,10 +13,5 @@ open class ToastModule : LazyModule() {
 fun String.toast(time: Int = Toast.LENGTH_SHORT): Functions<ToastModule> {
     return Functions(ToastModule::class.java) {
         it.toast(this, time)
-
     }
 }
-
-
-
-
