@@ -12,6 +12,7 @@ class App : LazyApp() {
         inject(RecycleModule::class.java)
         inject(MapModule::class.java)
         inject(BroadCastModule::class.java)
+        inject(BottomNavigationViewModule::class.java)
 
         api = inject(RetrofitModule::class.java)
             .buildRetrofit("https://jsonplaceholder.typicode.com", Api::class.java)

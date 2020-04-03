@@ -42,13 +42,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     /*Kotlin Stuffs*/
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    /*Google Ads*/
-//    implementation 'com.google.android.gms:play-services-ads:19.0.0'
-
 
 
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
+
+    implementation 'com.google.android.material:material:1.1.0-alpha10'
 
 
 }

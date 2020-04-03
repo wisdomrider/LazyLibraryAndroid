@@ -1,6 +1,5 @@
 package org.wisdomrider.lazylibrary.modules
 
-import android.util.Log
 import android.widget.Toast
 import org.wisdomrider.lazylibrary.Functions
 import org.wisdomrider.lazylibrary.LazyModule

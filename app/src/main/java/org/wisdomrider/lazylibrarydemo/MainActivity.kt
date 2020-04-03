@@ -10,6 +10,7 @@ import android.view.MenuItem
 import org.wisdomrider.lazylibrary.LazyBase
 import org.wisdomrider.lazylibrary.modules.reciveLazyBroadCast
 import org.wisdomrider.lazylibrary.modules.sendLazyBoradcast
+import org.wisdomrider.lazylibrarydemo.bottomnavigation.BottomNavigationView
 import org.wisdomrider.lazylibrarydemo.fetchdata.FetchindDataFromServer
 import org.wisdomrider.lazylibrarydemo.mapactivity.MapActivity
 
@@ -38,19 +39,22 @@ class MainActivity : LazyBase() {
                 reciveLazyBroadCast() { context: Context?, intent: Intent?,reciver: BroadcastReceiver? ->
                     var msg = intent?.getStringExtra("key")
                     Log.e("message", msg)
-                    // if you want un register than you can
                     unregisterReceiver(reciver)
                 }.lazy()
-                // Sending Broad cast Example
                 var intent = Intent()
                 intent.putExtra("key", "Hello broad cast")
                 sendLazyBoradcast(intent).lazy()
             }
+
+            R.id.action_bottom_nav_view -> {
+                openActivity(BottomNavigationView::class.java)
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun <T> openActivity(java: Class<T>) {
+    private fun <T> openActivity(java: Class<T>) {
         var intent = Intent(this, java)
         startActivity(intent)
     }
