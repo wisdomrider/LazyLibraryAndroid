@@ -10,17 +10,7 @@ const val LAZY_BROADCAST = "LAZY_BROADCAST"
 
 open class LazyApp : Application() {
 
-    var callIt: ((intent: Intent?) -> Unit)? = null
-    val filter = IntentFilter(LAZY_BROADCAST)
-    lateinit var receiver: BroadcastReceiver
     private var modules = ArrayList<LazyModule>()
-
-
-    override fun sendBroadcast(intent: Intent) {
-        intent.action = LAZY_BROADCAST
-        super.sendBroadcast(intent)
-    }
-
 
 
     protected fun <T> inject(module: Class<T>): T {
@@ -41,19 +31,6 @@ open class LazyApp : Application() {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        val intentFilter = IntentFilter(
-            LAZY_BROADCAST
-        )
-        receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (callIt == null) return
-                callIt!!(intent)
-            }
-        }
-        registerReceiver(receiver, intentFilter)
-    }
 }
 
 

@@ -16,6 +16,8 @@ class FetchindDataFromServer : LazyBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fetchind_data_from_server)
+        supportActionBar!!.title="Retrofit and Recycler Module Example"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         var api = (application as App).api
         api.list()
             .get({

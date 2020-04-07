@@ -1,15 +1,13 @@
 package org.wisdomrider.lazylibrarydemo
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import org.wisdomrider.lazylibrary.LazyBase
-import org.wisdomrider.lazylibrary.modules.reciveLazyBroadCast
-import org.wisdomrider.lazylibrary.modules.sendLazyBoradcast
+import org.wisdomrider.lazylibrary.modules.receiveBroadcast
+import org.wisdomrider.lazylibrary.modules.sendBroadCast
+import org.wisdomrider.lazylibrary.modules.toast
 import org.wisdomrider.lazylibrarydemo.bottomnavigation.BottomNavigationView
 import org.wisdomrider.lazylibrarydemo.fetchdata.FetchindDataFromServer
 import org.wisdomrider.lazylibrarydemo.mapactivity.MapActivity
@@ -20,6 +18,7 @@ class MainActivity : LazyBase() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.example_menu, menu)
@@ -35,15 +34,15 @@ class MainActivity : LazyBase() {
                 openActivity(FetchindDataFromServer::class.java)
             }
             R.id.action_broad_cast_receiver -> {
-               // Receiving broad cast Example
-                reciveLazyBroadCast() { context: Context?, intent: Intent?,reciver: BroadcastReceiver? ->
-                    var msg = intent?.getStringExtra("key")
-                    Log.e("message", msg)
-                    unregisterReceiver(reciver)
+                // Receiving broad cast Example
+                receiveBroadcast { it, _ ->
+                    it!!.extras.getString("key").toast().lazy()
+                    true
                 }.lazy()
-                var intent = Intent()
-                intent.putExtra("key", "Hello broad cast")
-                sendLazyBoradcast(intent).lazy()
+                val intent = Intent()
+                intent.putExtra("key", "Hello broadCast !")
+                intent.sendBroadCast().lazy()
+
             }
 
             R.id.action_bottom_nav_view -> {
@@ -54,8 +53,5 @@ class MainActivity : LazyBase() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun <T> openActivity(java: Class<T>) {
-        var intent = Intent(this, java)
-        startActivity(intent)
-    }
+
 }

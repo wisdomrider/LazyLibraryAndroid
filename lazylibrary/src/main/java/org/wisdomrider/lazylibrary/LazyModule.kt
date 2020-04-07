@@ -14,7 +14,12 @@ open class LazyModule {
     fun setContext(lazy: LazyApp): LazyModule {
         this.lazy = lazy
         this.context = lazy.applicationContext
+        this.onInit()
         return this
+    }
+
+    open fun onInit() {
+
     }
 
 

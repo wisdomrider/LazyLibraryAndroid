@@ -12,28 +12,32 @@ import org.wisdomrider.lazylibrary.LAZY_BROADCAST
 import org.wisdomrider.lazylibrary.LazyModule
 
 open class BroadCastModule : LazyModule() {
+
+    override fun onInit() {
+    }
+
 }
 
-fun FragmentActivity.sendLazyBoradcast(intent: Intent): Functions<BroadCastModule> {
+
+fun Intent.sendBroadCast(): Functions<BroadCastModule> {
     return Functions(BroadCastModule::class.java) {
-        intent.action = LAZY_BROADCAST
-        this.sendBroadcast(intent)
+        this.action = LAZY_BROADCAST
+        it.context.sendBroadcast(this)
     }
 }
 
-fun FragmentActivity.reciveLazyBroadCast (
-     functions: (context: Context?, intent: Intent?, reciver: BroadcastReceiver) -> Unit
+fun receiveBroadcast(
+    functions: (intent: Intent?, receiver: BroadcastReceiver) -> Boolean
 ): Functions<BroadCastModule> {
     return Functions(BroadCastModule::class.java) {
-        val intentFilter = IntentFilter(
-            LAZY_BROADCAST
-        )
+        val intentFilter = IntentFilter(LAZY_BROADCAST)
         var receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                functions(context, intent, this as BroadcastReceiver)
+                if (functions(intent, this))
+                    it.context.unregisterReceiver(this)
             }
 
         }
-        this.registerReceiver(receiver, intentFilter)
+        it.context.registerReceiver(receiver, intentFilter)
     }
 }

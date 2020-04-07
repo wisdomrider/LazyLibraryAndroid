@@ -14,9 +14,7 @@ open class LazyBase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lazy = application as LazyApp
-        lazy.callIt = {
-            gotBroadcast(it)
-        }
+
     }
 
     fun <T> getModule(module: Class<T>): T {
@@ -40,8 +38,15 @@ open class LazyBase : AppCompatActivity() {
         return this.function(lazy.getModule(this.java))
     }
 
-    open fun gotBroadcast(intent: Intent?) {
-
+    fun <T> openActivity(java: Class<T>? = null, intent: Intent? = null) {
+        if (intent == null)
+            startActivity(Intent(this, java))
+        else
+            startActivity(intent)
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
 

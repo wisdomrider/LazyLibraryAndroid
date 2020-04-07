@@ -27,6 +27,7 @@ class RetrofitModule : LazyModule() {
     }
 
 }
+
 fun <T> Call<T>.get(
     response: (response: Response<T>) -> Unit,
     failure: (t: Throwable) -> Unit
@@ -37,11 +38,7 @@ fun <T> Call<T>.get(
         }
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
-            if (response.code() == 200) {
-                response(response)
-            } else {
-                failure(Exception("Response class is not 200 ${response.code()}"))
-            }
+            response(response)
         }
     })
 }

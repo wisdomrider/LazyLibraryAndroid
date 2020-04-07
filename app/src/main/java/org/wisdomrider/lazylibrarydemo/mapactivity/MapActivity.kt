@@ -10,11 +10,13 @@ import org.wisdomrider.lazylibrary.modules.createMapSync
 import org.wisdomrider.lazylibrary.modules.toast
 import org.wisdomrider.lazylibrarydemo.R
 
-class MapActivity : LazyBase () {
+class MapActivity : LazyBase() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+        supportActionBar!!.title = "Map Module Example"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         this.createMapSync(R.id.map) {
             var lat = 27.712021
             var long = 85.312950

@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:background="#ffffff"
-                android:id="@+id/customBottomBar"
+                android:id="@+id/navView"
                 app:menu= "@menu/bottom_nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
