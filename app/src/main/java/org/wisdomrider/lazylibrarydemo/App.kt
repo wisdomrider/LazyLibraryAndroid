@@ -16,10 +16,10 @@ class App : LazyApp() {
         inject(BottomNavigationModule::class.java)
 
         api = inject(RetrofitModule::class.java)
-            .buildRetrofit("https://jsonplaceholder.typicode.com", Api::class.java)
+            .build("https://jsonplaceholder.typicode.com", Api::class.java)
             .create(Api::class.java)
-        inject(SqliteModule::class.java)
-            .initModule
+//        inject(SqliteModule::class.java)
+//            .build("DB_NAME")
 
     }
 }
