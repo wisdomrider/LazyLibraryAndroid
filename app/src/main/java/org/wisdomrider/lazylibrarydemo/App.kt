@@ -2,6 +2,7 @@ package org.wisdomrider.lazylibrarydemo
 
 import org.wisdomrider.lazylibrary.LazyApp
 import org.wisdomrider.lazylibrary.modules.*
+import org.wisdomrider.lazylibrary.modules.sqlite.SqliteModule
 import org.wisdomrider.lazylibrarydemo.api.Api
 
 class App : LazyApp() {
@@ -17,6 +18,9 @@ class App : LazyApp() {
         api = inject(RetrofitModule::class.java)
             .buildRetrofit("https://jsonplaceholder.typicode.com", Api::class.java)
             .create(Api::class.java)
+        inject(SqliteModule::class.java)
+            .initModule
+
     }
 }
 
