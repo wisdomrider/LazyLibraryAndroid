@@ -18,8 +18,8 @@ class App : LazyApp() {
         api = inject(RetrofitModule::class.java)
             .build("https://jsonplaceholder.typicode.com", Api::class.java)
             .create(Api::class.java)
-//        inject(SqliteModule::class.java)
-//            .build("DB_NAME")
+        inject(SqliteModule::class.java)
+            .build("DB_NAME")
 
     }
 }

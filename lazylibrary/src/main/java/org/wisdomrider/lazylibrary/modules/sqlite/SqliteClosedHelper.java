@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /*
    Created By WisdomRider(Avishek Adhikari)
@@ -61,6 +64,7 @@ public class SqliteClosedHelper implements Interface {
         StringBuilder var_name = new StringBuilder("CREATE TABLE if not exists `" + t.getClass().getSimpleName() + "` (");
         for (Method m : methods) var_name.append(m.getCreateTableQuery());
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - 1) + " )");
+        Log.e("QUERY", var_name.toString());
         Query(var_name.toString());
         return this;
     }
@@ -83,6 +87,7 @@ public class SqliteClosedHelper implements Interface {
                     var_name.append(m.getValue() + ",");
         }
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - 1) + ")");
+        Log.e("QUERY", var_name.toString());
         database.execSQL(String.valueOf(var_name));
         return this;
     }
@@ -250,6 +255,15 @@ public class SqliteClosedHelper implements Interface {
         return ((String) s).replace("'", "''");
     }
 
+
+    @NotNull
+    public <T> ArrayList<T> specialWhere(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
+        StringBuilder var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
+
+
+        return null;
+    }
+
     private <T> ArrayList<T> where(T t, String what, int position) {
         StringBuilder var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
         ArrayList<Method> methods = decompile(t);
@@ -308,4 +322,9 @@ public class SqliteClosedHelper implements Interface {
     }
 
 
+
+    @NotNull
+    public <T> T specialDelete(T t, @NotNull String type, @NotNull HashMap<String, String> condition) {
+        return null;
+    }
 }
