@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /*
    Created By WisdomRider(Avishek Adhikari)
@@ -94,6 +96,44 @@ public class SqliteClosedHelper implements Interface {
 
     private String parseString(Object value) {
         return value.toString().replace("'", "''");
+    }
+
+
+    public <T> void specialUpdate(T t, @NotNull String type, @NotNull HashMap<String, Object> condition, boolean autoInsert) {
+        ArrayList<Method> methods = decompile(t);
+        StringBuilder primary = new StringBuilder(" WHERE ");
+        StringBuilder var_name = new StringBuilder("UPDATE " + t.getClass().getSimpleName() + " SET ");
+        for (Method m : methods) {
+            String key = "";
+            if (!m.isNull()) {
+                if (m.isString())
+                    key = m.key() + "='" + parseSql(m.getValue()) + "',";
+                else
+                    key += m.key() + "=" + m.getValue() + ",";
+            }
+            var_name.append(key);
+        }
+        Iterator it = condition.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue() instanceof String) primary.append(pair.getKey())
+                    .append("=")
+                    .append("'" + parseSql(pair.getValue()) + "'" + type + " ");
+
+            else primary.append(pair.getKey())
+                    .append("=")
+                    .append(pair.getValue().toString() + type + " ");
+        }
+        var_name = new StringBuilder(var_name.substring(0, var_name.length() - 1));
+        primary = new StringBuilder(primary.substring(0, primary.length() - (type.length() + 1)));
+
+        Cursor cursor = database.rawQuery("SELECT * FROM " + t.getClass().getSimpleName() + primary.toString().replace(",", ""), null);
+        if (cursor.getCount() == 0) {
+            if (autoInsert)
+                insertTable(t);
+            return;
+        }
+        database.execSQL(var_name.toString() + primary.toString());
     }
 
 
@@ -259,9 +299,20 @@ public class SqliteClosedHelper implements Interface {
     @NotNull
     public <T> ArrayList<T> specialWhere(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
         StringBuilder var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
+        Iterator it = condition.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue() instanceof String) var_name.append(pair.getKey())
+                    .append("=")
+                    .append("'" + parseSql(pair.getValue()) + "'" + type + " ");
 
-
-        return null;
+            else var_name.append(pair.getKey())
+                    .append("=")
+                    .append(pair.getValue().toString() + type + " ");
+        }
+        var_name = new StringBuilder(var_name.substring(0, var_name.length() - (type.length() + 1)));
+        Cursor c = database.rawQuery(String.valueOf(var_name), null);
+        return getArrayFromCursor(c, t);
     }
 
     private <T> ArrayList<T> where(T t, String what, int position) {
@@ -322,9 +373,22 @@ public class SqliteClosedHelper implements Interface {
     }
 
 
-
     @NotNull
-    public <T> T specialDelete(T t, @NotNull String type, @NotNull HashMap<String, String> condition) {
-        return null;
+    public <T> void specialDelete(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
+        StringBuilder var_name = new StringBuilder("DELETE FROM " + t.getClass().getSimpleName() + " WHERE ");
+        Iterator it = condition.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue() instanceof String) var_name.append(pair.getKey())
+                    .append("=")
+                    .append("'" + parseSql(pair.getValue()) + "'" + type + " ");
+
+            else var_name.append(pair.getKey())
+                    .append("=")
+                    .append(pair.getValue().toString() + type + " ");
+        }
+        var_name = new StringBuilder(var_name.substring(0, var_name.length() - (type.length() + 1)));
+        Query(var_name.toString());
     }
+
 }

@@ -14,8 +14,12 @@ class SqliteModule : LazyModule() {
         return sqliteClosedHelper.specialWhere(any, type, condition)
     }
 
-    fun <T> deleteQuery(t: T, type: String, condition: HashMap<String, String>): T {
-        return sqliteClosedHelper.specialDelete(t, type, condition)
+    fun <T> deleteQuery(t: T, type: String, condition: HashMap<String, Any>) {
+        sqliteClosedHelper.specialDelete(t, type, condition)
+    }
+
+    fun <T> updateQuery(t: T, type: String, condition: HashMap<String, Any>, autoInsert: Boolean) {
+        sqliteClosedHelper.specialUpdate(t, type, condition, autoInsert)
     }
 
 }
@@ -42,13 +46,20 @@ fun <T> T.where(
     }
 }
 
-private fun <T> T.delete(
+fun <T> T.delete(type: String, condition: HashMap<String, Any>): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        it.deleteQuery(this, type, condition)
+    }
+}
+
+fun <T> T.update(
     type: String,
-    condition: HashMap<String, String>,
-    function: (list: T) -> Unit
+    condition: HashMap<String, Any>,
+    autoInsert:Boolean = true
 ): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
-        function(it.deleteQuery(this, type, condition))
+        it.updateQuery(this, type, condition, autoInsert)
     }
+
 }
 
