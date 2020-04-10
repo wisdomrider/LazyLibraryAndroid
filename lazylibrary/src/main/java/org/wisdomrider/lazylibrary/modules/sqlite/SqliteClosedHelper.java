@@ -3,9 +3,11 @@ package org.wisdomrider.lazylibrary.modules.sqlite;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -44,7 +46,6 @@ public class SqliteClosedHelper implements Interface {
     @Override
     public void Query(String q) {
         database.execSQL(q);
-
     }
 
     @Override
@@ -295,10 +296,8 @@ public class SqliteClosedHelper implements Interface {
         return ((String) s).replace("'", "''");
     }
 
-
-    @NotNull
-    public <T> ArrayList<T> specialWhere(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
-        StringBuilder var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
+    private String parseQuery(HashMap<String, Object> condition, String type) {
+        StringBuilder var_name = new StringBuilder();
         Iterator it = condition.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -311,9 +310,38 @@ public class SqliteClosedHelper implements Interface {
                     .append(pair.getValue().toString() + type + " ");
         }
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - (type.length() + 1)));
-        Cursor c = database.rawQuery(String.valueOf(var_name), null);
+        return var_name.toString();
+    }
+
+    @NotNull
+    public <T> ArrayList<T> specialWhere(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
+        Cursor c = database.rawQuery("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE " + parseQuery(condition, type), null);
         return getArrayFromCursor(c, t);
     }
+
+    @NotNull
+    public Cursor runRaw(@NotNull String s) {
+        return database.rawQuery(s, null);
+    }
+
+
+    public <T> long countTable(T t, @Nullable HashMap<String, Object> condition, @NotNull String type) {
+        try {
+            StringBuilder var_name;
+            if (condition == null) {
+                var_name = new StringBuilder("SELECT COUNT(*) from " + t.getClass().getSimpleName());
+            } else {
+                var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
+                var_name.append(parseQuery(condition, type));
+            }
+            SQLiteStatement st = database.compileStatement(var_name.toString());
+            return st.simpleQueryForLong();
+        } catch (Exception e) {
+            return 0;
+        }
+
+    }
+
 
     private <T> ArrayList<T> where(T t, String what, int position) {
         StringBuilder var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
@@ -376,18 +404,7 @@ public class SqliteClosedHelper implements Interface {
     @NotNull
     public <T> void specialDelete(T t, @NotNull String type, @NotNull HashMap<String, Object> condition) {
         StringBuilder var_name = new StringBuilder("DELETE FROM " + t.getClass().getSimpleName() + " WHERE ");
-        Iterator it = condition.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getValue() instanceof String) var_name.append(pair.getKey())
-                    .append("=")
-                    .append("'" + parseSql(pair.getValue()) + "'" + type + " ");
-
-            else var_name.append(pair.getKey())
-                    .append("=")
-                    .append(pair.getValue().toString() + type + " ");
-        }
-        var_name = new StringBuilder(var_name.substring(0, var_name.length() - (type.length() + 1)));
+        var_name.append(parseQuery(condition, type));
         Query(var_name.toString());
     }
 

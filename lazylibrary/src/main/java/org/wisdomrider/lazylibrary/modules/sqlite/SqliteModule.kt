@@ -1,7 +1,9 @@
 package org.wisdomrider.lazylibrary.modules.sqlite
 
+import android.database.Cursor
 import org.wisdomrider.lazylibrary.Functions
 import org.wisdomrider.lazylibrary.LazyModule
+import org.wisdomrider.lazylibrary.modules.sqlite.SQLITECONSTANTS.AND
 
 class SqliteModule : LazyModule() {
     lateinit var sqliteClosedHelper: SqliteClosedHelper
@@ -22,6 +24,7 @@ class SqliteModule : LazyModule() {
         sqliteClosedHelper.specialUpdate(t, type, condition, autoInsert)
     }
 
+
 }
 
 fun <T> T.createTable(): Functions<SqliteModule> {
@@ -37,8 +40,8 @@ fun <T> T.insert(): Functions<SqliteModule> {
 }
 
 fun <T> T.where(
-    type: String,
     condition: HashMap<String, Any>,
+    type: String = AND,
     function: (a: ArrayList<T>) -> Unit
 ): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
@@ -46,16 +49,16 @@ fun <T> T.where(
     }
 }
 
-fun <T> T.delete(type: String, condition: HashMap<String, Any>): Functions<SqliteModule> {
+fun <T> T.delete(condition: HashMap<String, Any>, type: String = AND): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
         it.deleteQuery(this, type, condition)
     }
 }
 
 fun <T> T.update(
-    type: String,
     condition: HashMap<String, Any>,
-    autoInsert:Boolean = true
+    type: String = AND,
+    autoInsert: Boolean = true
 ): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
         it.updateQuery(this, type, condition, autoInsert)
@@ -63,3 +66,32 @@ fun <T> T.update(
 
 }
 
+fun <T> T.count(
+    condition: HashMap<String, Any>? = null,
+    type: String = AND,
+    function: (count: Long) -> Int
+): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        function(it.sqliteClosedHelper.countTable(this, condition, type))
+    }
+
+}
+
+
+fun <T> T.removeAll(): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        it.sqliteClosedHelper.removeAll(this)
+    }
+}
+
+fun String.executeQuery(): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        it.sqliteClosedHelper.Query(this)
+    }
+}
+
+fun String.rawQuery(func: (cursor: Cursor) -> Unit): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java){
+        func(it.sqliteClosedHelper.runRaw(this))
+    }
+}
