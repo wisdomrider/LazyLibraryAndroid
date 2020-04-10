@@ -123,7 +123,7 @@ public class SqliteClosedHelper implements Interface {
 
             else primary.append(pair.getKey())
                     .append("=")
-                    .append(pair.getValue().toString() + type + " ");
+                    .append(pair.getValue().toString()+" " + type + " ");
         }
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - 1));
         primary = new StringBuilder(primary.substring(0, primary.length() - (type.length() + 1)));
@@ -307,7 +307,7 @@ public class SqliteClosedHelper implements Interface {
 
             else var_name.append(pair.getKey())
                     .append("=")
-                    .append(pair.getValue().toString() + type + " ");
+                    .append(pair.getValue().toString() + " "+type + " ");
         }
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - (type.length() + 1)));
         return var_name.toString();
@@ -325,22 +325,7 @@ public class SqliteClosedHelper implements Interface {
     }
 
 
-    public <T> long countTable(T t, @Nullable HashMap<String, Object> condition, @NotNull String type) {
-        try {
-            StringBuilder var_name;
-            if (condition == null) {
-                var_name = new StringBuilder("SELECT COUNT(*) from " + t.getClass().getSimpleName());
-            } else {
-                var_name = new StringBuilder("SELECT * FROM " + t.getClass().getSimpleName() + " WHERE ");
-                var_name.append(parseQuery(condition, type));
-            }
-            SQLiteStatement st = database.compileStatement(var_name.toString());
-            return st.simpleQueryForLong();
-        } catch (Exception e) {
-            return 0;
-        }
 
-    }
 
 
     private <T> ArrayList<T> where(T t, String what, int position) {

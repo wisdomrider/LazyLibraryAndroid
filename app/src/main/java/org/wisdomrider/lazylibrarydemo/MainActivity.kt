@@ -11,6 +11,7 @@ import org.wisdomrider.lazylibrary.modules.receiveBroadcast
 import org.wisdomrider.lazylibrary.modules.sendBroadCast
 import org.wisdomrider.lazylibrary.modules.sqlite.*
 import org.wisdomrider.lazylibrary.modules.sqlite.SQLITECONSTANTS.AND
+import org.wisdomrider.lazylibrary.modules.sqlite.SQLITECONSTANTS.OR
 import org.wisdomrider.lazylibrary.modules.toast
 import org.wisdomrider.lazylibrarydemo.bottomnavigation.BottomNavigationView
 import org.wisdomrider.lazylibrarydemo.fetchdata.FetchindDataFromServer
@@ -34,20 +35,21 @@ class MainActivity : LazyBase() {
         Books().createTable().lazy()
         Books().removeAll().lazy()
         Books("a2x", "'Book2", 10, 21312).insert().lazy()
+
+
         Books("a1x", "'Book2", 10, 21312)
-            .update(type = AND, condition = lazyMap("id" to "a1x", "price" to 10)).lazy()
+            .update(type = OR, condition = lazyMap("id" to "a1x", "price" to 10)
+            , autoInsert = false
+            ).lazy()
+
+
         Books().where(type = AND, condition = lazyMap("id" to "a1x", "price" to 10)) {
             Log.e("UPDATE", "A")
         }.lazy()
 
         Books().delete(type = AND, condition = lazyMap("id" to "a1x", "price" to 10)).lazy()
-        Books().count(condition = lazyMap("id" to "a1"), type = AND) {
-            Log.e("COUNT", it.toString())
 
-        }.lazy()
-
-        "select * from ${Books::class.java.javaClass.simpleName}".executeQuery().lazy() // for others query
-        "select * from ${Books::class.java.simpleName}".rawQuery {
+        "select * from Books".rawQuery {
             Log.e("CURSOR",it.toString());
         }.lazy()
     }

@@ -66,16 +66,7 @@ fun <T> T.update(
 
 }
 
-fun <T> T.count(
-    condition: HashMap<String, Any>? = null,
-    type: String = AND,
-    function: (count: Long) -> Int
-): Functions<SqliteModule> {
-    return Functions(SqliteModule::class.java) {
-        function(it.sqliteClosedHelper.countTable(this, condition, type))
-    }
 
-}
 
 
 fun <T> T.removeAll(): Functions<SqliteModule> {
@@ -83,12 +74,14 @@ fun <T> T.removeAll(): Functions<SqliteModule> {
         it.sqliteClosedHelper.removeAll(this)
     }
 }
+/*
 
 fun String.executeQuery(): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
         it.sqliteClosedHelper.Query(this)
     }
 }
+*/
 
 fun String.rawQuery(func: (cursor: Cursor) -> Unit): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java){
