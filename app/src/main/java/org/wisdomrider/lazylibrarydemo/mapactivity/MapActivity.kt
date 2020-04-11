@@ -1,6 +1,5 @@
 package org.wisdomrider.lazylibrarydemo.mapactivity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng

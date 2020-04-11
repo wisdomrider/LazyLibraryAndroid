@@ -19,6 +19,7 @@ class FetchindDataFromServer : LazyBase() {
         supportActionBar!!.title="Retrofit and Recycler Module Example"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         var api = (application as App).api
+
         api.list()
             .get({
                  rv_fetchdata.lazyAdapter(it.body()!!, R.layout.item)
@@ -31,6 +32,7 @@ class FetchindDataFromServer : LazyBase() {
                 it.message!!.toast().lazy()
 
             })
+
         rv_fetchdata.linearLayoutManager().lazy()
     }
 }

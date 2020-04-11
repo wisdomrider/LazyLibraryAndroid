@@ -95,6 +95,7 @@ public class SqliteClosedHelper implements Interface {
         return this;
     }
 
+
     private String parseString(Object value) {
         return value.toString().replace("'", "''");
     }
@@ -138,6 +139,8 @@ public class SqliteClosedHelper implements Interface {
     }
 
 
+
+
     @Override
     public <T> SqliteClosedHelper updateTable(T t) {
         ArrayList<Method> methods = decompile(t);
@@ -156,6 +159,7 @@ public class SqliteClosedHelper implements Interface {
                 }
             }
         }
+
         Cursor cursor = database.rawQuery("SELECT * FROM " + t.getClass().getSimpleName() + primary.toString().replace(",", ""), null);
         if (cursor.getCount() == 0) {
             insertTable(t);
@@ -164,7 +168,7 @@ public class SqliteClosedHelper implements Interface {
         var_name = new StringBuilder(var_name.substring(0, var_name.length() - 1));
         primary = new StringBuilder(primary.substring(0, primary.length() - 1));
         var_name.append(primary);
-        Log.d("QUERY", String.valueOf(var_name));
+        Log.d("QUERY Mac", String.valueOf(var_name));
         database.execSQL(String.valueOf(var_name));
         return this;
     }
@@ -269,6 +273,26 @@ public class SqliteClosedHelper implements Interface {
     }
 
     @Override
+    public <T> SqliteClosedHelper removeOne(T t) {
+        ArrayList<Method> methods = decompile(t);
+        StringBuilder var_name = new StringBuilder("Delete from  " + t.getClass().getSimpleName()+ " WHERE ");
+        for (Method m: methods) {
+            String key = "";
+            if (!m.isNull()) {
+                if (m.isPrimary()) {
+                    key = m.key() + "=" + m.getValue();
+                    var_name.append(key);
+                }
+            }
+        }
+        Log.d("var name", String.valueOf(var_name));
+        database.execSQL(String.valueOf(var_name));
+        return this;
+    }
+
+
+
+    @Override
     public <T> SqliteClosedHelper updateAll(ArrayList<T> t) {
         for (T t1 : t) updateTable(t1);
         return this;
@@ -345,6 +369,8 @@ public class SqliteClosedHelper implements Interface {
         Cursor c = database.rawQuery(String.valueOf(var_name), null);
         return getArrayFromCursor(c, t);
     }
+
+
 
 
     private <T> ArrayList<T> getArrayFromCursor(Cursor c, T t) {

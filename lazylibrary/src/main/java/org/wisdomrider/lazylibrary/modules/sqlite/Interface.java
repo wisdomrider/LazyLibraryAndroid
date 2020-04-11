@@ -41,6 +41,8 @@ public interface Interface {
 
     <T> SqliteClosedHelper removeAll(T t);
 
+    <T> SqliteClosedHelper removeOne(T t);
+
     <T> SqliteClosedHelper updateAll(ArrayList<T> t);
 
     <T> SqliteClosedHelper insertAll(ArrayList<T> t);

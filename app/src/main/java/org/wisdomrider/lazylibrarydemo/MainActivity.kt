@@ -16,42 +16,16 @@ import org.wisdomrider.lazylibrary.modules.toast
 import org.wisdomrider.lazylibrarydemo.bottomnavigation.BottomNavigationView
 import org.wisdomrider.lazylibrarydemo.fetchdata.FetchindDataFromServer
 import org.wisdomrider.lazylibrarydemo.mapactivity.MapActivity
+import org.wisdomrider.lazylibrarydemo.sqlite.SqliteActivity
 
 class MainActivity : LazyBase() {
 
-    class Books(
-        @SqliteAnnotations.Primary
-        var id: String,
-        var name: String,
-        var price: Int,
-        var stock: Long
-    ) {
-        constructor() : this("a1x", "", 1, 2)
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Books().createTable().lazy()
-        Books().removeAll().lazy()
-        Books("a2x", "'Book2", 10, 21312).insert().lazy()
 
-
-        Books("a1x", "'Book2", 10, 21312)
-            .update(type = OR, condition = lazyMap("id" to "a1x", "price" to 10)
-            , autoInsert = false
-            ).lazy()
-
-
-        Books().where(type = AND, condition = lazyMap("id" to "a1x", "price" to 10)) {
-            Log.e("UPDATE", "A")
-        }.lazy()
-
-        Books().delete(type = AND, condition = lazyMap("id" to "a1x", "price" to 10)).lazy()
-
-        "select * from Books".rawQuery {
-            Log.e("CURSOR",it.toString());
-        }.lazy()
     }
 
 
@@ -77,7 +51,10 @@ class MainActivity : LazyBase() {
                 val intent = Intent()
                 intent.putExtra("key", "Hello broadCast !")
                 intent.sendBroadCast().lazy()
+            }
 
+            R.id.action_sq_lite_example -> {
+             openActivity(SqliteActivity::class.java)
             }
 
             R.id.action_bottom_nav_view -> {
@@ -87,15 +64,4 @@ class MainActivity : LazyBase() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }
-
-
-
-
-
-
-
-
-

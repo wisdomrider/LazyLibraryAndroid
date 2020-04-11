@@ -33,9 +33,30 @@ fun <T> T.createTable(): Functions<SqliteModule> {
     }
 }
 
+fun <T> T.getAll(function:(arraylist: ArrayList<T>?)->Unit): Functions<SqliteModule> {
+     return Functions(SqliteModule::class.java) {
+         var arraylist =  it.sqliteClosedHelper.getAll(this)
+         function(arraylist)
+     }
+}
+
+
+
 fun <T> T.insert(): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
         it.sqliteClosedHelper.insertTable(this)
+    }
+}
+
+fun <T> T.updateTable(): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        it.sqliteClosedHelper.updateTable(this)
+    }
+}
+
+fun <T> T.deleteOne(): Functions<SqliteModule> {
+    return Functions(SqliteModule::class.java) {
+        it.sqliteClosedHelper.removeOne(this)
     }
 }
 
@@ -55,6 +76,8 @@ fun <T> T.delete(condition: HashMap<String, Any>, type: String = AND): Functions
     }
 }
 
+
+
 fun <T> T.update(
     condition: HashMap<String, Any>,
     type: String = AND,
@@ -62,8 +85,8 @@ fun <T> T.update(
 ): Functions<SqliteModule> {
     return Functions(SqliteModule::class.java) {
         it.updateQuery(this, type, condition, autoInsert)
-    }
 
+    }
 }
 
 
