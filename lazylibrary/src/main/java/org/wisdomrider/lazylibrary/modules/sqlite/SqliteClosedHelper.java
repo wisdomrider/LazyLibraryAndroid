@@ -135,6 +135,7 @@ public class SqliteClosedHelper implements Interface {
                 insertTable(t);
             return;
         }
+        Log.e("var name", var_name.toString()+primary.toString());
         database.execSQL(var_name.toString() + primary.toString());
     }
 

@@ -11,6 +11,7 @@ import org.wisdomrider.lazylibrary.modules.sqlite.SQLITECONSTANTS.OR
 import org.wisdomrider.lazylibrary.modules.sqlite.insert
 import org.wisdomrider.lazylibrary.modules.sqlite.update
 import org.wisdomrider.lazylibrary.modules.sqlite.updateTable
+import org.wisdomrider.lazylibrary.modules.sqlite.where
 import org.wisdomrider.lazylibrary.modules.toast
 import org.wisdomrider.lazylibrarydemo.R
 import org.wisdomrider.lazylibrarydemo.utils.BOOK
@@ -54,7 +55,16 @@ class AddOrUpdateActivity : LazyBase() {
                 books.author = bookAuthor
                 books.price = bookPrice
                 books.description = bookDescription
-                books.updateTable().lazy()
+               // books.updateTable().lazy()
+                books
+                    .update(type = OR, condition = lazyMap("id" to  books.id
+
+                        )
+                        , autoInsert = false
+                    ).lazy()
+
+
+
                 "Update Sucessfully".toast().lazy()
                 var intent = Intent(this, SqliteActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -28,7 +28,7 @@ class SqliteActivity : LazyBase() {
         // Getting all book
         getAllBooksFromDatabase()
         adapter = rv_books.lazyAdapter(list, R.layout.row_books)
-        { wisdomHolder: LazyAdapter.WisdomHolder, index: Int, books: Books ->
+        {   wisdomHolder: LazyAdapter.WisdomHolder, index: Int, books: Books ->
             wisdomHolder.itemView.tv_book_name.text = books.name
             wisdomHolder.itemView.tv_book_price.text = "$ ${books.price}"
             wisdomHolder.itemView.tv__book_description.text = books.description

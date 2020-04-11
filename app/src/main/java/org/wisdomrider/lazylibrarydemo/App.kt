@@ -14,13 +14,11 @@ class App : LazyApp() {
         inject(MapModule::class.java)
         inject(BroadCastModule::class.java)
         inject(BottomNavigationModule::class.java)
-
         api = inject(RetrofitModule::class.java)
             .build("https://jsonplaceholder.typicode.com", Api::class.java)
             .create(Api::class.java)
         inject(SqliteModule::class.java)
             .build("DB_NAME")
-
     }
 }
 
