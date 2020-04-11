@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        tools:context=".sqlite.AddOrUpdateActivity">
+
+    <EditText
+            android:padding="8dp"
+            android:background="@drawable/squre_edit_text"
+            android:inputType="text"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:id="@+id/et_book_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Book Name"
+            />
+
+    <EditText
+            android:padding="8dp"
+            android:background="@drawable/squre_edit_text"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:textSize="16dp"
+            android:id="@+id/et_book_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Author Name"
+            />
+    <EditText
+            android:padding="8dp"
+            android:background="@drawable/squre_edit_text"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:textSize="16dp"
+            android:text="0"
+            android:id="@+id/et_book_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter price"
+            />
+
+    <EditText
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="@drawable/squre_edit_text"
+            android:layout_marginTop="8dp"
+            android:inputType="text"
+            android:textSize="16dp"
+            android:id="@+id/et_book_description"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:hint="Enter Book Description"
+            />
+    <Button
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:id="@+id/btn_insert_or_update"
+            android:text="Insert"
+            />
+
+</LinearLayout>

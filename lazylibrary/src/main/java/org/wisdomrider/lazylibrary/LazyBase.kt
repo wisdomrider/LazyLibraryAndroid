@@ -2,6 +2,7 @@ package org.wisdomrider.lazylibrary
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 class Functions<T>(
@@ -44,9 +45,17 @@ open class LazyBase : AppCompatActivity() {
         else
             startActivity(intent)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 }
 
+fun <V> lazyMap(vararg pairs: Pair<String, V>): HashMap<String, Any> {
+    val map = HashMap<String, Any>()
+    pairs.forEach {
+        map.put(it.first, it.second!!)
+    }
+    return map
+}

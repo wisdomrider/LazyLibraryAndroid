@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitModule : LazyModule() {
     lateinit var retrofit: Retrofit
     var httpClient: OkHttpClient? = null
-    fun <T> buildRetrofit(baseUrl: String, apiClass: Class<T>): Retrofit {
+    fun <T> build(baseUrl: String, apiClass: Class<T>): Retrofit {
         var retrofitBefore = Retrofit.Builder()
         retrofitBefore.baseUrl(baseUrl)
         retrofitBefore.addConverterFactory(GsonConverterFactory.create())

@@ -14,7 +14,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".bottomnavigation.BottomNavigationView"></activity>
+        <activity android:name=".sqlite.AddOrUpdateActivity"></activity>
+        <activity android:name=".sqlite.SqliteActivity" />
+        <activity android:name=".bottomnavigation.BottomNavigationView" />
         <activity android:name=".fetchdata.FetchindDataFromServer" />
         <activity android:name=".mapactivity.MapActivity" />
 

@@ -11,6 +11,9 @@
     <item
             android:id="@+id/action_broad_cast_receiver"
             android:title="Broad cast Receiver" />
+    <item
+           android:id="@+id/action_sq_lite_example"
+            android:title="Sqlite Exmple"/>
 
     <item
             android:id="@+id/action_bottom_nav_view"
