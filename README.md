@@ -74,3 +74,7 @@ As shown above now you can toast any string object with extension funtion toast 
 	}
 
 Likewise lazy consists of various modules which needs to be registered in the application.kt first then it will be provided to you in activity and fragments which extends the lazybase class.
+
+# [Click here](https://github.com/wisdomrider/LazyLibraryAndroid/wiki/Lazy-Modules-List) to view all modules with their details.
+
+If you want to contribute to this project feel free to make a issue and if you got any problems contact newmac1000@gmail.com or wisdomrider@hotmail.com
