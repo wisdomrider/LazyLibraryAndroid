@@ -47,4 +47,30 @@ Now you can easily use lazylibrary in your app just change the appcompact activi
 	        setContentView(R.layout.activity_main)  
 	    }  
 	}
-why to do that? because lazybase provides a extension functions which helps you.
+why to do that? because lazybase provides a extension functions which helps you.Now you have access to lazy function which does all the things.
+
+### Getting started !
+
+Lazylibrary works with **module concept**. if you want to use a module then you have to register it in application.kt and it will be provided to you in all the application for example lets use **toastmodule**.
+First go to **application.kt** file and add this below super.onCreate() method like this:
+			
+	override fun onCreate() {  
+	    super.onCreate()  
+	    inject(ToastModule::class.java)  
+	}
+Now you have access to toast module in your application to use it lets move to mainactivity.kt and in oncreate lets add a toast method as shown below:
+
+	override fun onCreate(savedInstanceState: Bundle?) {  
+	    ...
+	    setContentView(R.layout.activity_main)  
+	    "Checking Toast".toast().lazy()  
+	}
+As shown above now you can toast any string object with extension funtion toast followed by **.lazy()** toast function also provides optional parameters for the time of the toast by default toast uses length short but you can pass custom time or length long as shown below:
+
+	override fun onCreate(savedInstanceState: Bundle?) {  
+	    ...
+	    setContentView(R.layout.activity_main)  
+		"Checking Toast".toast(Toast.LENGTH_LONG).lazy()
+	}
+
+Likewise lazy consists of various modules which needs to be registered in the application.kt first then it will be provided to you in activity and fragments which extends the lazybase class.
